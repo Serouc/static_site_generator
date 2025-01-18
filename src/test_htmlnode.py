@@ -26,7 +26,6 @@ class TestHtmlNode(unittest.TestCase):
     def test_value_noteq(self):
         node = HTMLNode(value = "the text inside a paragraph")
         node2 = HTMLNode(value = "different text inside a paragraph")
-        print(node.__repr__())
         self.assertNotEqual(node, node2)
 
     def test_children_noteq(self):

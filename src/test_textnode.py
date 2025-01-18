@@ -22,7 +22,6 @@ class TestTextNode(unittest.TestCase):
     def test_noteqURL(self):
         node = TextNode("This is a text node", TextType.BOLD, "dummy/url/")
         node2 = TextNode("This is a text node", TextType.BOLD, "different/url/")
-        print(node.__repr__())
         self.assertNotEqual(node, node2)
 
 if __name__ == "__main__":
