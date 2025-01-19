@@ -9,7 +9,9 @@ class HTMLNode:
         raise NotImplementedError
     
     def props_to_html(self):
-        return " ".join(map(lambda k: f'{k}="{self.props[k]}"', self.props))
+        if self.props == None:
+            return ""
+        return " " + " ".join(map(lambda k: f'{k}="{self.props[k]}"', self.props))
     
     def __repr__(self):
         cls = self.__class__.__name__

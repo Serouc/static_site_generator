@@ -15,7 +15,12 @@ class TestHtmlNode(unittest.TestCase):
         "target": "_blank",
         }
         node = HTMLNode(props=test_props).props_to_html()
-        node2 = 'href="https://www.google.com" target="_blank"'
+        node2 = ' href="https://www.google.com" target="_blank"'
+        self.assertEqual(node, node2)
+
+    def test_props_to_html_None(self):
+        node = HTMLNode().props_to_html()
+        node2 = ""
         self.assertEqual(node, node2)
 
     def test_tag_noteq(self):
