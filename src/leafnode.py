@@ -12,5 +12,5 @@ class LeafNode(HTMLNode):
             raise ValueError("No string to format as HTML")
         if self.tag == None:
             return self.value
-        else:
-            return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
+
+        return f"<{self.tag}{self.props_to_html()}>{self.value}</{self.tag}>"
