@@ -41,6 +41,8 @@ def split_nodes_image(old_nodes):
                 result.append(TextNode(sections[0], TextType.TEXT))
                 result.append(TextNode(image_alt, TextType.IMAGE, image_link))
                 text = sections[1]
+            if text != "":
+                result.append(TextNode(text, TextType.TEXT))
 
     return result
 
@@ -61,5 +63,7 @@ def split_nodes_link(old_nodes):
                 result.append(TextNode(sections[0], TextType.TEXT))
                 result.append(TextNode(link_text, TextType.LINK, link_url))
                 text = sections[1]
+            if text != "":
+                result.append(TextNode(text, TextType.TEXT))
 
     return result

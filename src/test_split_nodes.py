@@ -71,5 +71,19 @@ class TestSplitNodes(unittest.TestCase):
             ]
         self.assertEqual(new_nodes, result)
 
+    def test_split_nodes_image_with_link(self):
+        node = TextNode(
+            "This is text with a an image ![image alt text](image/location/image.jpg) and a [link](totally/aurl/here)",
+            TextType.TEXT,
+            )
+        new_nodes = split_nodes_image([node])
+        print(new_nodes)
+        result = [
+            TextNode("This is text with a an image ", TextType.TEXT),
+            TextNode("image alt text", TextType.IMAGE, "image/location/image.jpg"),
+            TextNode(" and a [link](totally/aurl/here)", TextType.TEXT),
+            ]
+        self.assertEqual(new_nodes, result)    
+
 if __name__ == "__main__":
     unittest.main()
