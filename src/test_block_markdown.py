@@ -42,9 +42,10 @@ right here
 
     def test_block_to_block_type_code(self):
         input = block_to_block_type("""```
-                                    good old fashioned
-                                    code bl```ock
-                                    right here```""")
+good old fashioned
+code bl```ock
+right here
+```""")
         result = "code"
         self.assertEqual(input, result)
 
