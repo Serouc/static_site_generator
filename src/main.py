@@ -14,7 +14,7 @@ def main():
     public_dir = os.path.join(project_root, "public")
     content_dir = os.path.join(project_root, "content")
 
-    generate_page(os.path.join(content_dir, "index.md"),os.path.join(project_root, "template.html"), os.path.join(public_dir, "index.html"))
+    generate_pages_recursive(content_dir, os.path.join(project_root, "template.html"), public_dir)
 
 
 def static_to_public():
@@ -39,14 +39,29 @@ def copy_static_to_public(working_dir, public_dir):
             os.mkdir(os.path.join(public_dir, object))
             copy_static_to_public(os.path.join(working_dir, object), os.path.join(public_dir, object))
 
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    content_dir_contents = os.listdir(dir_path_content)
+    for object in content_dir_contents:
+        if os.path.isfile(os.path.join(dir_path_content, object)):
+            file = os.path.splitext(os.path.basename(object))
+
+            file_name = file[0]
+            file_ext = file[1]
+            print(file_ext)
+            if file_ext == ".md":
+                generate_page(os.path.join(dir_path_content, object), template_path, os.path.join(dest_dir_path, f"{file_name}.html"))
+        elif os.path.isdir(os.path.join(dir_path_content, object)):
+            os.mkdir(os.path.join(dest_dir_path, object))
+            generate_pages_recursive(os.path.join(dir_path_content, object), template_path, os.path.join(dest_dir_path, object))
+
+
 def generate_page(from_path, template_path, dest_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
     with open(from_path) as f:
         markdown = f.read()
     with open(template_path) as t:
         html_string = t.read()
-        print(html_string)
-        
+
     title = extract_title(markdown)
     content = markdown_to_html_node(markdown).to_html()
     html_string = html_string.replace("{{ Title }}", title).replace("{{ Content }}", content)
