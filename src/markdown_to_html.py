@@ -31,13 +31,17 @@ def block_node_to_html_node(block_type, block):
         '''
         return ParentNode("code", convert_code_block(block))
     elif block_type == BlockType.QUOTE.value:
-        return ParentNode("blockquote", text_to_children(block))
+        return convert_quote_block(block)
     elif block_type == BlockType.LIST_UNORDERED.value:
         return ParentNode("ul", split_list(block))
     elif block_type == BlockType.LIST_ORDERED.value:
         return ParentNode("ol", split_list(block))
     else:
         raise ValueError("Invalid block type")
+
+def convert_quote_block(block):
+    quote = block.split("> ", 1)[1]
+    return ParentNode("blockquote", text_to_children(quote))
 
 def convert_code_block(block):
     filtered_lines = []

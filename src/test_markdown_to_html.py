@@ -72,5 +72,12 @@ and a line with an ![image](image.jpeg) and a [link to boot.dev](https://www.boo
         result = '<div><h1>good old heading</h1><ol><li>ordered</li><li>list</li><li>for fun</li></ol><code>just a code block</code><p>and a line with an <img src="image.jpeg" alt="image" /> and a <a href="https://www.boot.dev">link to boot.dev</a></p></div>'
         self.assertEqual(input, result)
 
+    def test_quote_block(self):
+        markdown = "> This is a quote."
+        input = markdown_to_html_node(markdown).to_html()
+        result = "<div><blockquote>This is a quote.</blockquote></div>"
+        self.assertEqual(input, result)
+
+
 if __name__ == "__main__":
     unittest.main()
