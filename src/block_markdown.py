@@ -1,4 +1,5 @@
 from enum import Enum
+from parentnode import ParentNode
 
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
@@ -9,7 +10,7 @@ class BlockType(Enum):
     LIST_ORDERED = "ordered list"
 
 def markdown_to_blocks(markdown):
-    blocks = markdown.splitlines()
+    blocks = markdown.split("\n\n")
     result = []
     for block in blocks:
         stripped_block = block.strip()
@@ -18,6 +19,8 @@ def markdown_to_blocks(markdown):
     return result
 
 def block_to_block_type(block):
+    lines = block.splitlines()
+
     if block.startswith("#"):
         hash_count = 0
         for char in block:
@@ -27,22 +30,21 @@ def block_to_block_type(block):
                 break
         if hash_count <= 6 and block[hash_count] == " ":
             return BlockType.HEADING.value
-    if block.startswith("```") and block.endswith("```"):
+    if len(lines) > 1 and lines[0] == "```" and lines[-1] == "```":
         return BlockType.CODE.value
     if block.startswith(">"):
-        for line in block.splitlines():
+        for line in lines:
             if not line.startswith(">"):
                 break
         return BlockType.QUOTE.value
     if block.startswith("* ") or block.startswith("- "):
-        lines = block.splitlines()
         for line in lines:
             if not (line.startswith("* ") or line.startswith("- ")):
                 break
         else:
             return BlockType.LIST_UNORDERED.value
     if block.startswith("1. "):
-        lines = enumerate(block.splitlines(), 1)
+        lines = enumerate(lines, 1)
         for i, line in lines:
             if not line.startswith(f"{i}. "):
                 break

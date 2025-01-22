@@ -15,8 +15,7 @@ This is a paragraph of text. It has some **bold** and *italic* words inside of i
                                   )
         result = [
             '# This is a heading with trailing spaces', 'This is a paragraph of text. It has some **bold** and *italic* words inside of it.', 
-            '* This is the first list item in a list block with leading spaces', 
-            '* This is a list item', '* This is another list item'
+            '* This is the first list item in a list block with leading spaces\n* This is a list item\n* This is another list item'
             ]
         self.assertEqual(input, result)
 
@@ -27,13 +26,25 @@ The following line has 5 spaces
 This is a follow up line to confirm
 """
         )
-        result = ["The following line has 5 spaces","This is a follow up line to confirm"]
+        result = ["The following line has 5 spaces\n     \nThis is a follow up line to confirm"]
+        self.assertEqual(input, result)
+    
+    def test_code_markdown_to_block(self):
+        input = markdown_to_blocks("""
+```
+good old fashioned
+code bl```ock
+right here
+```
+""")
+        result = ['```\ngood old fashioned\ncode bl```ock\nright here\n```']
         self.assertEqual(input, result)
 
     def test_block_to_block_type_code(self):
-        input = block_to_block_type("""```good old fashioned
-                          code bl```ock
-                          right here```""")
+        input = block_to_block_type("""```
+                                    good old fashioned
+                                    code bl```ock
+                                    right here```""")
         result = "code"
         self.assertEqual(input, result)
 

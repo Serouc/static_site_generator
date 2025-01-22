@@ -1,6 +1,7 @@
 import unittest
 from parentnode import ParentNode
 from leafnode import LeafNode
+from textnode import TextNode
 
 class TestLeafNode(unittest.TestCase):
     def test_parent_of_leaves(self):
@@ -37,6 +38,7 @@ class TestLeafNode(unittest.TestCase):
             ],
         )
         node2 = "<p><p><b>Bold text</b>Normal text</p><p><i>italic text</i>Normal text</p></p>"
+        print(node)
         self.assertEqual(node.to_html(), node2)
     
     def test_oddnesting(self):
