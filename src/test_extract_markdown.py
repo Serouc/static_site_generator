@@ -1,5 +1,5 @@
 import unittest
-from extract_markdown import extract_markdown_images, extract_markdown_links
+from extract_markdown import extract_markdown_images, extract_markdown_links, extract_title
 
 class TestExtractMarkdown(unittest.TestCase):
     def test_images(self):
@@ -25,6 +25,24 @@ class TestExtractMarkdown(unittest.TestCase):
         input = extract_markdown_images(text)
         result = [("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")]
         self.assertEqual(input, result)
+
+    def test_extract_title_valid(self):
+        text = """# heading here
+
+other stuff
+"""
+        input = extract_title(text)
+        result = "heading here"
+        self.assertEqual(input, result)
+
+    def test_extract_title_invalid(self):
+        text = """no heading
+
+more text
+"""
+        with self.assertRaises(Exception):
+            extract_title(text)
+
 
 if __name__ == "__main__":
     unittest.main()
